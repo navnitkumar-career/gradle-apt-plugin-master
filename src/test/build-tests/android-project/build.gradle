@@ -1,0 +1,42 @@
+buildscript {
+  repositories {
+    mavenCentral()
+    maven {
+      url "https://oss.sonatype.org/content/repositories/snapshots/"
+    }
+  }
+
+  dependencies {
+    classpath 'com.jimdo.gradle:gradle-apt-plugin:0.5-SNAPSHOT'
+    classpath 'com.android.tools.build:gradle:0.10.0'
+  }
+}
+
+apply plugin: 'apt'
+apply plugin: 'android'
+
+project.afterEvaluate {
+ project.tasks.lint.enabled = false
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	compile 'com.squareup.dagger:dagger:1.1.0'
+
+	apt 'com.squareup.dagger:dagger-compiler:1.1.0'
+}
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion '19.0.1'
+
+    sourceSets {
+      main {
+        manifest.srcFile 'AndroidManifest.xml'
+        res.srcDirs = ['res']
+      }
+    }
+}
